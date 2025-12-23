@@ -1,7 +1,7 @@
 import { SignUp } from "@clerk/nextjs";
 import React from "react";
 
-const SignUp = () => {
+const SignUpPage = () => {
   return (
     <div>
       <SignUp />
@@ -9,4 +9,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpPage;
