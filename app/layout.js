@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -23,29 +25,31 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider appearance={{theme: dark,}}>
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-         
-        {/* header */}
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        {/* footer */}
-        <footer>
-          <div className="container justify-center items-center flex border bg-white text-black mx-auto px-4 ">
-            <p>
-              Made by Md Tasrif Khan
-            </p>
-          </div>
-        </footer></ThemeProvider>
-      </body>
-    </html></ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+          
+          {/* header */}
+              <Header />
+              <main className="min-h-screen">{children}</main>
+          {/* footer */}
+              <footer>
+                <div className=" justify-center items-center flex border bg-white text-black mx-auto px-4 ">
+                  <p>
+                    Made by Md Tasrif Khan
+                  </p>
+                </div>
+              </footer>
+          </ThemeProvider>
+        </body>
+      </html>
+  </ClerkProvider>
   );
 }

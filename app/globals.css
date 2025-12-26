@@ -123,3 +123,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.gradient{
+  @apply bg-gradient-to-b from-blue-600 to-blue-800;
+}
+
+.gradient-title {
+  @apply bg-gradient-to-b from-blue-400 to-blue-600 font-bold text-transparent bg-clip-text pb-1 pr-2;
+}

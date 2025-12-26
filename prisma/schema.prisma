@@ -1,0 +1,239 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+
+// =======================
+// Prisma Generator & DB
+// =======================
+
+
+datasource db {
+  provider = "postgresql"
+}
+
+// =======================
+// User Model
+// =======================
+
+model User {
+  id                  String    @id @default(uuid())
+  clerkUserId         String    @unique
+  email               String    @unique
+  name                String?
+  imageUrl            String?
+  role                UserRole  @default(UNASSIGNED)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  // Patient-specific
+  credits             Int       @default(2)
+
+  // Doctor-specific
+  specialty            String?
+  experience           Int?
+  credentialUrl        String?
+  description          String?   @db.Text
+  verificationStatus   VerificationStatus? @default(PENDING)
+
+  // Relations
+  patientAppointments  Appointment[] @relation("PatientAppointments")
+  doctorAppointments   Appointment[] @relation("DoctorAppointments")
+  availabilities       Availability[]
+  transactions         CreditTransaction[]
+  payouts              Payout[]
+  createdBloodBanks    BloodBank[] @relation("BloodBankCreatedBy")
+  bloodBankMemberships BloodBankUser[]
+
+}
+
+// =======================
+// Enums
+// =======================
+
+enum UserRole {
+  UNASSIGNED
+  PATIENT
+  DOCTOR
+  ADMIN
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+// =======================
+// Availability
+// =======================
+
+model Availability {
+  id        String     @id @default(uuid())
+  doctorId  String
+  doctor    User       @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  startTime DateTime
+  endTime   DateTime
+  status    SlotStatus @default(AVAILABLE)
+
+  @@index([doctorId, startTime])
+}
+
+enum SlotStatus {
+  AVAILABLE
+  BOOKED
+  BLOCKED
+}
+
+// =======================
+// Appointment
+// =======================
+
+model Appointment {
+  id                  String   @id @default(uuid())
+  patientId           String
+  patient             User     @relation("PatientAppointments", fields: [patientId], references: [id])
+  doctorId            String
+  doctor              User     @relation("DoctorAppointments", fields: [doctorId], references: [id])
+  startTime           DateTime
+  endTime             DateTime
+  status              AppointmentStatus @default(SCHEDULED)
+  notes               String?  @db.Text
+  patientDescription  String?  @db.Text
+
+  videoSessionId      String?
+  videoSessionToken   String?
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([status, startTime])
+  @@index([doctorId, startTime])
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+// =======================
+// Credit Transactions
+// =======================
+
+model CreditTransaction {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount    Int
+  type      TransactionType
+  packageId String?
+  createdAt DateTime @default(now())
+}
+
+enum TransactionType {
+  CREDIT_PURCHASE
+  APPOINTMENT_DEDUCTION
+  ADMIN_ADJUSTMENT
+}
+
+// =======================
+// Payouts
+// =======================
+
+model Payout {
+  id           String       @id @default(uuid())
+  doctorId     String
+  doctor       User         @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  amount       Float
+  credits      Int
+  platformFee  Float
+  netAmount    Float
+  paypalEmail  String
+  status       PayoutStatus @default(PROCESSING)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  processedAt  DateTime?
+  processedBy  String?
+
+  @@index([status, createdAt])
+  @@index([doctorId, status])
+}
+
+enum PayoutStatus {
+  PROCESSING
+  PROCESSED
+}
+
+// =======================
+// BLOOD BANK MODULE
+// =======================
+
+model BloodBank {
+  id          String   @id @default(uuid())
+  name        String
+  address     String
+  city        String
+  phone       String?
+  email       String?
+
+  createdById String
+  createdBy   User     @relation("BloodBankCreatedBy", fields: [createdById], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       BloodBankUser[]
+  inventory   BloodInventory[]
+}
+
+model BloodBankUser {
+  id           String          @id @default(uuid())
+  bloodBankId  String
+  userId       String
+  role         BloodBankRole   @default(MEMBER)
+  joinedAt     DateTime        @default(now())
+
+  bloodBank    BloodBank       @relation(fields: [bloodBankId], references: [id], onDelete: Cascade)
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([bloodBankId, userId])
+}
+
+enum BloodBankRole {
+  ADMIN
+  STAFF
+  DONOR
+  MEMBER
+}
+
+model BloodInventory {
+  id          String      @id @default(uuid())
+  bloodBankId String
+  bloodGroup  BloodGroup
+  units       Int         @default(0)
+  updatedAt   DateTime    @updatedAt
+
+  bloodBank   BloodBank   @relation(fields: [bloodBankId], references: [id], onDelete: Cascade)
+
+  @@unique([bloodBankId, bloodGroup])
+}
+
+enum BloodGroup {
+  A_POS
+  A_NEG
+  B_POS
+  B_NEG
+  AB_POS
+  AB_NEG
+  O_POS
+  O_NEG
+}
+
