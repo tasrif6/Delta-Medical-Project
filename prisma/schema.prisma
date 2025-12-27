@@ -9,19 +9,11 @@ generator client {
   output   = "../lib/generated/prisma"
 }
 
-
-// =======================
-// Prisma Generator & DB
-// =======================
-
-
 datasource db {
   provider = "postgresql"
+  url= env("DATABASE_URL")
 }
 
-// =======================
-// User Model
-// =======================
 
 model User {
   id                  String    @id @default(uuid())

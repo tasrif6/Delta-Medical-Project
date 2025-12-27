@@ -4,6 +4,8 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { CheckUser } from "@/lib/CheckUser";
+import { Calendar, CreditCard, Stethoscope } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 const Header = async () => {
   const user = await CheckUser();
@@ -20,24 +22,35 @@ const Header = async () => {
           />
         </Link>
         <div className="flex items-center space-x-2">
+          <Link href="/">
+            <Button
+              variant="outline"
+              className="hover:underline md:inline-flex items-center gap-2 cursor-pointer"
+            >
+              Home
+            </Button>
+          </Link>
           <SignedIn>
             {/* Admin */}
-            {user?.role === "Admin" && (
+            {user?.role === "ADMIN" && (
               <Link href="/admin">
                 <Button
                   variant="outline"
-                  clasName="hidden md:inline-flex items-center gap-2"
+                  clasName="hidden md:inline-flex items-center gap-2 hover:underline"
                 >
-                  <ShieldCheck className="h-4 w-4" />
+                  <ShieldCheck className="h-4 w-4 bg-blue-900 cursor-pointer" />
                   Admin Dashboard
                 </Button>
               </Link>
             )}
             {/* Patient */}
-            {user?.role === "Patient" && (
+            {user?.role === "PATIENT" && (
               <Link href="/appointments">
-                <Button variant="outline" className="h-4 w-4">
-                  {" "}
+                <Button
+                  variant="outline"
+                  className="hidden md:inline-flex items-center gap-2 cursor-pointer hover:underline"
+                >
+                  <Calendar className="h-4 w-4" />
                   My Appointments
                 </Button>
               </Link>
@@ -45,26 +58,57 @@ const Header = async () => {
 
             {/* Doctors */}
 
-            {user?.role === "Doctor" && (
+            {user?.role === "DOCTOR" && (
               <Link href="/doctor">
-                <Button variant="outline" className="h-4 w-4">
+                <Button
+                  variant="outline"
+                  className="hidden md:inline-flex items-center hover:underline cursor-pointer gap-2"
+                >
+                  <Stethoscope className="h-4 w-4" />
                   Doctor Dashboard
                 </Button>
               </Link>
             )}
           </SignedIn>
+
+          {(!user || user?.role !== "ADMIN") && (
+            <Link href={user?.role === "PATIENT" ? "/pricing" : "/doctor"}>
+              <Badge
+                variant="outline"
+                className="h-8 md:inline-flex hover:underline text-sm px-3 py-1 items-center gap-2"
+              >
+                <CreditCard />
+                <span>
+                  {" "}
+                  {user && user.role !== "ADMIN" ? (
+                    <>
+                      {user.credits}{" "}
+                      <span>
+                        {user?.role === "PATIENT"
+                          ? "Credits"
+                          : "Earned Credits"}
+                      </span>
+                    </>
+                  ) : (
+                    <>Pricing</>
+                  )}
+                </span>
+              </Badge>
+            </Link>
+          )}
+
           <SignedOut>
             <SignInButton>
               <Button
                 variant="secondary"
-                className="cursor-pointer bg-blue-600 hover:bg-white hover:text-black"
+                className="cursor-pointer bg-blue-600 hover:bg-white hover:text-black hover:underline"
               >
                 Login
               </Button>
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton className="w-20 h-20" />
+            <UserButton className="w-30 h-30" />
           </SignedIn>
         </div>
       </nav>

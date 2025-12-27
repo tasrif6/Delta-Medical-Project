@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { creditBenefits, features, testimonials } from "@/lib/data";
+import Pricing from "@/components/Pricing";
 
 export default function Home() {
   return (
@@ -86,7 +87,9 @@ export default function Home() {
                 Choose the perfect consultation package that fits your healthcare needs              </p>
             </div>
               {/* Pricing Table */}
+              
             <div>
+              <Pricing />
                 <Card className="mt-12 bg-muted/30 border-blue-600/30">
                   <CardHeader>
                     <CardTitle className="text-xl font-semibold text-white flex items-center"><Stethoscope className="mr-2 text-blue-600" />How Our Credit Works <ArrowBigDown className="ml-2 text-blue-600"/></CardTitle>
