@@ -4,11 +4,15 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { CheckUser } from "@/lib/CheckUser";
-import { Calendar, CreditCard, Stethoscope } from "lucide-react";
+import { Calendar, CreditCard, ShieldCheck, Stethoscope } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { CheckCredits } from "@/actions/credits";
 
 const Header = async () => {
   const user = await CheckUser();
+  if (user?.role === "PATIENT") {
+    await CheckCredits(user);
+  }
   return (
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-10 supports-backdrop-filter:bg-background/60">
       <nav className="w-full mx-auto px-4 h-20 flex items-center justify-between">
@@ -36,10 +40,13 @@ const Header = async () => {
               <Link href="/admin">
                 <Button
                   variant="outline"
-                  clasName="hidden md:inline-flex items-center gap-2 hover:underline"
+                  className="hidden md:inline-flex items-center gap-2 hover:underline cursor-pointer"
                 >
-                  <ShieldCheck className="h-4 w-4 bg-blue-900 cursor-pointer" />
+                  <ShieldCheck className="h-4 w-4 text-blue-600" />
                   Admin Dashboard
+                </Button>
+                <Button variant="ghost" className="md:hidden w-10 h-10 p-0">
+                  <ShieldCheck className="h-4 w-4" />
                 </Button>
               </Link>
             )}
@@ -53,13 +60,15 @@ const Header = async () => {
                   <Calendar className="h-4 w-4" />
                   My Appointments
                 </Button>
+                <Button variant="ghost" className="md:hidden w-10 h-10 p-0">
+                  <Calendar className="h-4 w-4" />
+                </Button>
               </Link>
             )}
 
             {/* Doctors */}
-
             {user?.role === "DOCTOR" && (
-              <Link href="/doctor">
+              <Link href="/doctors">
                 <Button
                   variant="outline"
                   className="hidden md:inline-flex items-center hover:underline cursor-pointer gap-2"
@@ -67,12 +76,15 @@ const Header = async () => {
                   <Stethoscope className="h-4 w-4" />
                   Doctor Dashboard
                 </Button>
+                <Button variant="ghost" className="md:hidden w-10 h-10 p-0">
+                  <Stethoscope className="h-4 w-4" />
+                </Button>
               </Link>
             )}
           </SignedIn>
 
           {(!user || user?.role !== "ADMIN") && (
-            <Link href={user?.role === "PATIENT" ? "/pricing" : "/doctor"}>
+            <Link href={user?.role === "PATIENT" ? "/pricing" : "/doctors"}>
               <Badge
                 variant="outline"
                 className="h-8 md:inline-flex hover:underline text-sm px-3 py-1 items-center gap-2"

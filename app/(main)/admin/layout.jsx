@@ -1,0 +1,73 @@
+import verifyAdmin from "@/actions/admin";
+import { redirect } from "next/navigation";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
+import {
+  AlertCircle,
+  CreditCard,
+  HeartPlus,
+  ShieldCheck,
+  UserRoundPlus,
+  Users,
+} from "lucide-react";
+export const metadata = {
+  title: "Admin Settings - DMC",
+  description: "Manage doctors, patients and platform settings",
+};
+export default async function AdminLayout({ children }) {
+  const isAdmin = await verifyAdmin();
+
+  if (!isAdmin) {
+    redirect("/onboarding");
+  }
+
+  return (
+    <div className="container mx-auto px-10 py-30">
+      <PageHeader icon={<ShieldCheck />} title="Admin Settings" />
+      <Tabs
+        defaultValue="pending"
+        className="grid grid-cols-1 md:grid-cols-4 gap-6"
+      >
+        <TabsList className="md:col-span-1 bg-muted/30 border h-40 md:h-70 flex sm:flex-row md:flex-col w-full p-2 md:p-1 rounded-md md:space-y-2 sm:space-x-2 md:space-x-0">
+          <TabsTrigger
+            value="pending"
+            className="flex-1 md:flex md:items-center md:justify-center md:px-4 md:py-3 w-full hover:bg-blue-800 cursor-pointer"
+          >
+            {" "}
+            <AlertCircle className="h-4 w-4 mr-2 hidden md:inline text-blue-600" />
+            <span>Pending Verification</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="doctors"
+            className=" flex-1 md:flex md:items-center md:justify-center md:px-4 md:py-3 w-full hover:bg-blue-800 cursor-pointer"
+          >
+            <UserRoundPlus className="h-4 w-4 mr-2 hidden md:inline text-blue-600" />
+            <span>Doctors</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="patients"
+            className=" flex-1 md:flex md:items-center md:justify-center md:px-4 md:py-3 w-full hover:bg-blue-800 cursor-pointer"
+          >
+            <Users className="h-4 w-4 mr-2 hidden md:inline text-blue-600" />
+            <span>Patients</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="bloodbank"
+            className="flex-1 md:flex md:items-center md:justify-center md:px-4 md:py-3 w-full hover:bg-blue-800 cursor-pointer"
+          >
+            <HeartPlus className="h-4 w-4 mr-2 hidden md:inline text-red-600" />
+            <span>Blood Banks</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="payouts"
+            className="flex-1 md:flex md:items-center md:justify-center md:px-4 md:py-3 w-full hover:bg-blue-800 cursor-pointer"
+          >
+            <CreditCard className="h-4 w-4 mr-2 hidden md:inline text-blue-600" />
+            <span>Payouts</span>
+          </TabsTrigger>
+        </TabsList>
+        <div className="md:col-span-3">{children}</div>
+      </Tabs>
+    </div>
+  );
+}
