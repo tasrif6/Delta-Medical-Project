@@ -7,9 +7,8 @@ export const metadata = {
 };
 export default async function DoctorDashboardLayout({ children }) {
   return (
-    <div className="container mx-auto px-12 py-30">
+    <div className="container mx-auto px-12 py-30 ">
       <PageHeader icon={<Stethoscope />} title={"Doctor Dashboard"} />
-
       {children}
     </div>
   );

@@ -75,9 +75,8 @@ export default async function VerificationPage() {
                 <AlertCircle className="h-5 w-5 text-amber-400 mr-3 mt-0.5 flex-shrink-0" />
                 <p className="text-muted-foreground text-left">
                   Your profile is currently under review by our administrative
-                  team. This process typically takes 1-2 business days.
-                  You&apos;ll receive an email notification once your account is
-                  verified.
+                  team. This process typically takes 1-2 business days. You'll
+                  receive an email notification once your account is verified.
                 </p>
               </div>
             )}

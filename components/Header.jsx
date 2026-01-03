@@ -8,7 +8,7 @@ import { Calendar, CreditCard, ShieldCheck, Stethoscope } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { CheckCredits } from "@/actions/credits";
 
-const Header = async () => {
+export default async function Header() {
   const user = await CheckUser();
   if (user?.role === "PATIENT") {
     await CheckCredits(user);
@@ -68,7 +68,7 @@ const Header = async () => {
 
             {/* Doctors */}
             {user?.role === "DOCTOR" && (
-              <Link href="/doctors">
+              <Link href="/doctor">
                 <Button
                   variant="outline"
                   className="hidden md:inline-flex items-center hover:underline cursor-pointer gap-2"
@@ -84,7 +84,15 @@ const Header = async () => {
           </SignedIn>
 
           {(!user || user?.role !== "ADMIN") && (
-            <Link href={user?.role === "PATIENT" ? "/pricing" : "/doctors"}>
+            <Link
+              href={
+                user?.role === "PATIENT"
+                  ? "/pricing"
+                  : user?.role === "DOCTOR"
+                  ? "/doctor"
+                  : "/doctors"
+              }
+            >
               <Badge
                 variant="outline"
                 className="h-8 md:inline-flex hover:underline text-sm px-3 py-1 items-center gap-2"
@@ -126,6 +134,4 @@ const Header = async () => {
       </nav>
     </header>
   );
-};
-
-export default Header;
+}
