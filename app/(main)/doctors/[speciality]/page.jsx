@@ -17,7 +17,7 @@ export default async function SpecialityPage({ params }) {
   }
 
   return (
-    <div className="space-y-5 mt-20">
+    <div className="space-y-6 mt-20">
       <PageHeader
         title={specialty}
         backLink="/doctors"

@@ -11,6 +11,8 @@ import {
 import {
   AlertCircle,
   Calendar,
+  ChevronLeft,
+  ChevronRight,
   Clock,
   FileText,
   Medal,
@@ -19,9 +21,8 @@ import {
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Chevron } from "react-day-picker";
 import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import SlotPicker from "./slot-picker";
 import AppointmentForm from "./appointment-form";
 export function DoctorProfile({ doctor, availableDays }) {
@@ -63,11 +64,12 @@ export function DoctorProfile({ doctor, availableDays }) {
               <div className="flex flex-col items-center text-center">
                 <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4 bg-blue-900/20">
                   {doctor.imageUrl ? (
-                    <Image
+                    <img
                       src={doctor.imageUrl}
                       alt={doctor.name}
-                      fill
-                      className="object-cover"
+                      fill="true"
+                      height={100}
+                      width={100}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -75,40 +77,40 @@ export function DoctorProfile({ doctor, availableDays }) {
                     </div>
                   )}
                 </div>
+
+                <h2 className="text-xl flex items-center justify-center font-bold text-white mb-1">
+                  Dr. {doctor.name}
+                </h2>
+                <Badge
+                  variant="outline"
+                  className="text-white border-blue-600 px-3 py-1 mb-2 text-center items-center justify-center"
+                >
+                  {" "}
+                  {doctor.specialty}
+                </Badge>
+
+                <div className="flex items-center justify-center mb-2">
+                  <Medal className="h-4 w-4 text-blue-400 mr-2" />
+                  <span className="text-muted-foreground">
+                    {doctor.experience} years experience
+                  </span>
+                </div>
+
+                <Button
+                  onClick={toggleBooking}
+                  className="w-full bg-blue-600 hover:bg-blue-800 mt-4 text-white cursor-pointer"
+                >
+                  {showBooking ? (
+                    <>
+                      Hide Booking <ChevronLeft className="ml-2 h-4 w-4" />
+                    </>
+                  ) : (
+                    <>
+                      Book Appointment <ChevronRight className="ml-2 h-4 w-4" />
+                    </>
+                  )}
+                </Button>
               </div>
-
-              <h2 className="text-xl font-bold text-white mb-1">
-                Dr. {doctor.name}
-              </h2>
-              <Badge
-                variant="outline"
-                className="bg-blue-600 border-blue-900 text-blue-400 mb-4"
-              >
-                {" "}
-                {doctor.specialty}
-              </Badge>
-
-              <div className="flex items-center justify-center mb-2">
-                <Medal className="h-4 w-4 text-emerald-400 mr-2" />
-                <span className="text-muted-foreground">
-                  {doctor.experience} years experience
-                </span>
-              </div>
-
-              <Button
-                onClick={toggleBooking}
-                className="w-full bg-blue-600 hover:bg-blue-800 mt-4 text-white "
-              >
-                {showBooking ? (
-                  <>
-                    Hide Booking <Chevron className="ml-2 h-4 w-4" />
-                  </>
-                ) : (
-                  <>
-                    Book Appointment <Chevron className="ml-2 h-4 w-4" />
-                  </>
-                )}
-              </Button>
             </CardContent>
           </Card>
         </div>
