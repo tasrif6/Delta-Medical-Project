@@ -32,14 +32,14 @@ export function SlotPicker({ days, onSelectSlot }) {
         onValueChange={setActiveTab}
         className="w-full"
       >
-        <TabsList className="w-full justify-start overflow-x-auto">
+        <TabsList className="w-full justify-start overflow-x-auto cursor-pointer">
           {days.map((day) => (
             <TabsTrigger
               key={day.date}
               value={day.date}
               disabled={day.slots.length === 0}
               className={
-                day.slots.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+                day.slots.length === 0 ? "opacity-50 cursor-pointer" : ""
               }
             >
               <div className="flex gap-2">
@@ -83,7 +83,7 @@ export function SlotPicker({ days, onSelectSlot }) {
                         <Clock
                           className={`h-4 w-4 mr-2 ${
                             selectedSlot?.startTime === slot.startTime
-                              ? "text-blue-400"
+                              ? "text-blue-600"
                               : "text-muted-foreground"
                           }`}
                         />
@@ -110,7 +110,7 @@ export function SlotPicker({ days, onSelectSlot }) {
         <Button
           onClick={confirmSelection}
           disabled={!selectedSlot}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
         >
           Continue
           <ChevronRight className="ml-2 h-4 w-4" />

@@ -6,14 +6,15 @@ import { addDays, addMinutes, endOfDay, format, isBefore } from "date-fns";
 import { db } from "@/lib/prisma";
 
 export async function bookAppointment(formData) {
-    const { userId } =await auth();
+    const { userId } = await auth();
 
     if (!userId) {
-        throw new Error("Unathorized");
+        throw new Error("Unauthorized");
     }
 
     try {
-        const patient= await db.user.findUnique({
+        // Find the user by their Clerk user id
+        const patient = await db.user.findUnique({
             where: {
                 clerkUserId: userId,
                 role: "PATIENT",
@@ -107,7 +108,7 @@ export async function bookAppointment(formData) {
 
     } catch(error) {
         console.error("Failed to book appointment:", error.message);
-        throw new Error("Failed to book appointment:",error.message);
+        throw new Error(`Failed to book appointment: ${error.message}`);
     }
 } 
 

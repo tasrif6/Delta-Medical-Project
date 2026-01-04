@@ -52,7 +52,7 @@ export default async function VerificationPage() {
           <CardContent className="text-center">
             {isRejected ? (
               <div className="bg-red-900/10 border border-red-900/20 rounded-lg p-4 mb-6 flex items-start">
-                <AlertCircle className="h-5 w-5 text-red-400 mr-3 mt-0.5 flex-shrink-0" />
+                <AlertCircle className="h-5 w-5 text-red-400 mr-3 mt-0.5 shrink-0" />
                 <div className="text-muted-foreground text-left">
                   <p className="mb-2">
                     Our administrative team has reviewed your application and

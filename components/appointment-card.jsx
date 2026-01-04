@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
@@ -56,11 +55,11 @@ export function AppointmentCard({
     fn: submitNotes,
     data: notesData,
   } = useFetch(addAppointmentNotes);
-  const {
-    loading: tokenLoading,
-    fn: submitTokenRequest,
-    data: tokenData,
-  } = useFetch(generateVideoToken);
+  // const {
+  //   loading: tokenLoading,
+  //   fn: submitTokenRequest,
+  //   data: tokenData,
+  // } = useFetch(generateVideoToken);
   const {
     loading: completeLoading,
     fn: submitMarkCompleted,
@@ -147,63 +146,63 @@ export function AppointmentCard({
   };
 
   // Handle join video call
-  const handleJoinVideoCall = async () => {
-    if (tokenLoading) return;
+  // const handleJoinVideoCall = async () => {
+  //   if (tokenLoading) return;
 
-    setAction("video");
+  //   setAction("video");
 
-    const formData = new FormData();
-    formData.append("appointmentId", appointment.id);
-    await submitTokenRequest(formData);
-  };
+  //   const formData = new FormData();
+  //   formData.append("appointmentId", appointment.id);
+  //   await submitTokenRequest(formData);
+  // };
 
-  // Handle successful operations
-  useEffect(() => {
-    if (cancelData?.success) {
-      toast.success("Appointment cancelled successfully");
-      setOpen(false);
-      if (refetchAppointments) {
-        refetchAppointments();
-      } else {
-        router.refresh();
-      }
-    }
-  }, [cancelData, refetchAppointments, router]);
+  // // Handle successful operations
+  // useEffect(() => {
+  //   if (cancelData?.success) {
+  //     toast.success("Appointment cancelled successfully");
+  //     setOpen(false);
+  //     if (refetchAppointments) {
+  //       refetchAppointments();
+  //     } else {
+  //       router.refresh();
+  //     }
+  //   }
+  // }, [cancelData, refetchAppointments, router]);
 
-  useEffect(() => {
-    if (completeData?.success) {
-      toast.success("Appointment marked as completed");
-      setOpen(false);
-      if (refetchAppointments) {
-        refetchAppointments();
-      } else {
-        router.refresh();
-      }
-    }
-  }, [completeData, refetchAppointments, router]);
+  // useEffect(() => {
+  //   if (completeData?.success) {
+  //     toast.success("Appointment marked as completed");
+  //     setOpen(false);
+  //     if (refetchAppointments) {
+  //       refetchAppointments();
+  //     } else {
+  //       router.refresh();
+  //     }
+  //   }
+  // }, [completeData, refetchAppointments, router]);
 
-  useEffect(() => {
-    if (notesData?.success) {
-      toast.success("Notes saved successfully");
-      setAction(null);
-      if (refetchAppointments) {
-        refetchAppointments();
-      } else {
-        router.refresh();
-      }
-    }
-  }, [notesData, refetchAppointments, router]);
+  // useEffect(() => {
+  //   if (notesData?.success) {
+  //     toast.success("Notes saved successfully");
+  //     setAction(null);
+  //     if (refetchAppointments) {
+  //       refetchAppointments();
+  //     } else {
+  //       router.refresh();
+  //     }
+  //   }
+  // }, [notesData, refetchAppointments, router]);
 
-  useEffect(() => {
-    if (tokenData?.success) {
-      // Redirect to video call page with token and session ID
-      router.push(
-        `/video-call?sessionId=${tokenData.videoSessionId}&token=${tokenData.token}&appointmentId=${appointment.id}`
-      );
-    } else if (tokenData?.error) {
-      setAction(null);
-    }
-  }, [tokenData, appointment.id, router]);
+  // useEffect(() => {
+  //   if (tokenData?.success) {
+  //     // Redirect to video call page with token and session ID
+  //     router.push(
+  //       `/video-call?sessionId=${tokenData.videoSessionId}&token=${tokenData.token}&appointmentId=${appointment.id}`
+  //     );
+  //   } else if (tokenData?.error) {
+  //     setAction(null);
+  //   }
+  // }, [tokenData, appointment.id, router]);
 
   // Determine if appointment is active (within 30 minutes of start time)
   const isAppointmentActive = () => {
