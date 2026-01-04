@@ -1,7 +1,3 @@
-import React from "react";
-
-const AppointmentForm = () => {
+export function AppointmentForm() {
   return <div>AppointmentForm</div>;
-};
-
-export default AppointmentForm;
+}
