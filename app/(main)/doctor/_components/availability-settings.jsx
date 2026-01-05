@@ -111,7 +111,7 @@ export function AvailabilitySettings({ slots }) {
 
               {slots.length === 0 ? (
                 <p className="text-muted-foreground">
-                  You haven&apos;t set any availability slots yet. Add your
+                  You haven't set any availability slots yet. Add your
                   availability to start accepting appointments.
                 </p>
               ) : (
@@ -141,7 +141,7 @@ export function AvailabilitySettings({ slots }) {
 
             <Button
               onClick={() => setShowForm(true)}
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-blue-600 hover:bg-blue-700 cursor-pointer text-white"
             >
               <Plus className="h-4 w-4 mr-2" />
               Set Availability Time

@@ -8,7 +8,6 @@ import {
   Calendar,
   Clock,
   User,
-  Video,
   Stethoscope,
   X,
   Edit,
@@ -156,42 +155,42 @@ export function AppointmentCard({
   //   await submitTokenRequest(formData);
   // };
 
-  // // Handle successful operations
-  // useEffect(() => {
-  //   if (cancelData?.success) {
-  //     toast.success("Appointment cancelled successfully");
-  //     setOpen(false);
-  //     if (refetchAppointments) {
-  //       refetchAppointments();
-  //     } else {
-  //       router.refresh();
-  //     }
-  //   }
-  // }, [cancelData, refetchAppointments, router]);
+  // Handle successful operations
+  useEffect(() => {
+    if (cancelData?.success) {
+      toast.success("Appointment cancelled successfully");
+      setOpen(false);
+      if (refetchAppointments) {
+        refetchAppointments();
+      } else {
+        router.refresh();
+      }
+    }
+  }, [cancelData, refetchAppointments, router]);
 
-  // useEffect(() => {
-  //   if (completeData?.success) {
-  //     toast.success("Appointment marked as completed");
-  //     setOpen(false);
-  //     if (refetchAppointments) {
-  //       refetchAppointments();
-  //     } else {
-  //       router.refresh();
-  //     }
-  //   }
-  // }, [completeData, refetchAppointments, router]);
+  useEffect(() => {
+    if (completeData?.success) {
+      toast.success("Appointment marked as completed");
+      setOpen(false);
+      if (refetchAppointments) {
+        refetchAppointments();
+      } else {
+        router.refresh();
+      }
+    }
+  }, [completeData, refetchAppointments, router]);
 
-  // useEffect(() => {
-  //   if (notesData?.success) {
-  //     toast.success("Notes saved successfully");
-  //     setAction(null);
-  //     if (refetchAppointments) {
-  //       refetchAppointments();
-  //     } else {
-  //       router.refresh();
-  //     }
-  //   }
-  // }, [notesData, refetchAppointments, router]);
+  useEffect(() => {
+    if (notesData?.success) {
+      toast.success("Notes saved successfully");
+      setAction(null);
+      if (refetchAppointments) {
+        refetchAppointments();
+      } else {
+        router.refresh();
+      }
+    }
+  }, [notesData, refetchAppointments, router]);
 
   // useEffect(() => {
   //   if (tokenData?.success) {
@@ -223,11 +222,16 @@ export function AppointmentCard({
     userRole === "DOCTOR" ? appointment.patient : appointment.doctor;
 
   const otherPartyLabel = userRole === "DOCTOR" ? "Patient" : "Doctor";
-  const otherPartyIcon = userRole === "DOCTOR" ? <User /> : <Stethoscope />;
+  const otherPartyIcon =
+    userRole === "DOCTOR" ? (
+      <User className="text-blue-600" />
+    ) : (
+      <Stethoscope className="text-blue-600" />
+    );
 
   return (
-    <>
-      <Card className="border-blue-900/20 hover:border-blue-700/30 transition-all">
+    <div>
+      <Card className="border cursor-pointer hover:border-blue-600 transition-all">
         <CardContent className="p-4">
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <div className="flex items-start gap-3">
@@ -297,7 +301,7 @@ export function AppointmentCard({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-blue-900/30"
+                  className="border-blue-900/30 cursor-pointer"
                   onClick={() => setOpen(true)}
                 >
                   View Details
@@ -410,7 +414,7 @@ export function AppointmentCard({
             )}
 
             {/* Join Video Call Button */}
-            {appointment.status === "SCHEDULED" && (
+            {/* {appointment.status === "SCHEDULED" && (
               <div className="space-y-2">
                 <h4 className="text-sm font-medium text-muted-foreground">
                   Video Consultation
@@ -437,7 +441,7 @@ export function AppointmentCard({
                   )}
                 </Button>
               </div>
-            )}
+            )} */}
 
             {/* Doctor Notes (Doctor can view/edit, Patient can only view) */}
             <div className="space-y-2">
@@ -454,7 +458,7 @@ export function AppointmentCard({
                       onClick={() => setAction("notes")}
                       className="h-7 text-blue-400 hover:text-blue-300 hover:bg-blue-900/20"
                     >
-                      <Edit className="h-3.5 w-3.5 mr-1" />
+                      <Edit className="h-3.5 w-3.5 mr-1 cursor-pointer" />
                       {appointment.notes ? "Edit" : "Add"}
                     </Button>
                   )}
@@ -466,7 +470,7 @@ export function AppointmentCard({
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Enter your clinical notes here..."
-                    className="bg-background border-blue-900/20 min-h-[100px]"
+                    className="bg-background border-blue-900/20 min-h-100px"
                   />
                   <div className="flex justify-end space-x-2">
                     <Button
@@ -478,7 +482,7 @@ export function AppointmentCard({
                         setNotes(appointment.notes || "");
                       }}
                       disabled={notesLoading}
-                      className="border-blue-900/30"
+                      className="border-blue-900/30 cursor-pointer"
                     >
                       Cancel
                     </Button>
@@ -486,7 +490,7 @@ export function AppointmentCard({
                       size="sm"
                       onClick={handleSaveNotes}
                       disabled={notesLoading}
-                      className="bg-blue-600 hover:bg-blue-700"
+                      className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
                     >
                       {notesLoading ? (
                         <>
@@ -522,7 +526,7 @@ export function AppointmentCard({
                 <Button
                   onClick={handleMarkCompleted}
                   disabled={completeLoading}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
                 >
                   {completeLoading ? (
                     <>
@@ -544,7 +548,7 @@ export function AppointmentCard({
                   variant="outline"
                   onClick={handleCancelAppointment}
                   disabled={cancelLoading}
-                  className="border-red-900/30 text-red-400 hover:bg-red-900/10 mt-3 sm:mt-0"
+                  className="border-red-900  mt-3 sm:mt-0"
                 >
                   {cancelLoading ? (
                     <>
@@ -553,8 +557,10 @@ export function AppointmentCard({
                     </>
                   ) : (
                     <>
-                      <X className="h-4 w-4 mr-1" />
-                      Cancel Appointment
+                      <X className="h-4 w-4 mr-1 cursor-pointer text-red-600" />
+                      <span className="cursor-pointer text-red-400 ">
+                        Cancel Appointment
+                      </span>
                     </>
                   )}
                 </Button>
@@ -563,13 +569,13 @@ export function AppointmentCard({
 
             <Button
               onClick={() => setOpen(false)}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white"
             >
-              Close
+              OK
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }
