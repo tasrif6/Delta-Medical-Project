@@ -37,11 +37,9 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative w-full h-110 md:h-120 overflow-hidden rounded-xl">
+            <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-xl">
               <Image src="/banner.jpg" alt="HomePage-image" fill priority className="object-cover w-full h-full"/>
             </div>
-
-           
           </div>
         </div>
       </section>
@@ -84,10 +82,12 @@ export default function Home() {
                 Service Subscription Packages
               </h1>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Choose the perfect consultation package that fits your healthcare needs              </p>
+                Choose the perfect consultation package that fits your healthcare needs              
+              </p>
             </div>
+
+
               {/* Pricing Table */}
-              
             <div>
               <Pricing />
                 <Card className="mt-12 bg-muted/30 border-blue-600/30">
@@ -108,11 +108,11 @@ export default function Home() {
                         })}
                     </ul>
                   </CardContent>
-                 
                 </Card>
             </div>
         </div>
      </section>
+
 
       {/* Testimonials */}
      <section className="py-20">

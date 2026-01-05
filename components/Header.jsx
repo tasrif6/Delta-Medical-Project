@@ -128,7 +128,7 @@ export default async function Header() {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton className="w-30 h-30" />
+            <UserButton className="w-10 h-10" />
           </SignedIn>
         </div>
       </nav>

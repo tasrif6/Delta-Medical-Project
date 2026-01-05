@@ -470,7 +470,7 @@ export function AppointmentCard({
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Enter your clinical notes here..."
-                    className="bg-background border-blue-900/20 min-h-100px"
+                    className="bg-background border-blue-900/20 min-h-[100px]"
                   />
                   <div className="flex justify-end space-x-2">
                     <Button
@@ -504,7 +504,7 @@ export function AppointmentCard({
                   </div>
                 </div>
               ) : (
-                <div className="p-3 rounded-md bg-muted/20 border border-blue-900/20 min-h-[80px]">
+                <div className="p-3 rounded-md bg-muted/20 border border-blue-900/20 min-h-[100px]">
                   {appointment.notes ? (
                     <p className="text-white whitespace-pre-line">
                       {appointment.notes}

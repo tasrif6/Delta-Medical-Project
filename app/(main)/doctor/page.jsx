@@ -29,7 +29,7 @@ export default async function DoctorDashboardPage() {
     <div className="container">
       <Tabs
         defaultValue="earnings"
-        className="justify-center items-center w-400 "
+        className="justify-center items-center w-full md:max-w-3xl mx-auto"
       >
         <TabsList className=" cursor-pointer bg-muted border p-2 md:p-2 rounded md:space-y-2 sm:space-x-2 md:space-x-2">
           <TabsTrigger

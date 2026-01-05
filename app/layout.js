@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
           
           {/* header */}
               <Header />
-              <main className="min-h-screen">{children}</main>
+              <main className="min-h-screen pt-20 mt-20">{children}</main>
               <Toaster />
           {/* footer */}
               <footer>
