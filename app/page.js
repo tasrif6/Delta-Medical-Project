@@ -38,8 +38,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative w-full h-[420px] md:h-[520px] overflow-hidden rounded-xl">
-              <Image src="/banner.jpg" alt="HomePage-image" fill priority className="object-cover w-full h-full"/>
+            <div className="relative w-full h-420px md:h-520px overflow-hidden rounded-xl">
+              <Image src="/heroImage.jpg" alt="HomePage-image" width={1000} height={700} className="object-cover"/>
             </div>
           </div>
         </div>

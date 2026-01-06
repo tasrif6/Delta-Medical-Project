@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { X } from "lucide-react";
 
 const BLOOD_GROUPS = [
   { value: "A_POS", label: "A+" },
@@ -273,7 +274,11 @@ export default function BloodBankClient({
               </div>
 
               {(user?.role === "ADMIN" || b.userId === user?.id) && (
-                <Button variant="outline" onClick={() => handleCancel(b.id)}>
+                <Button
+                  onClick={() => handleCancel(b.id)}
+                  className="text-white cursor-pointer bg-red-600"
+                >
+                  <X />
                   Cancel
                 </Button>
               )}

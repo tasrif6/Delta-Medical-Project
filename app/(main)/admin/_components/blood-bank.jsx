@@ -1,6 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { SquarePen } from "lucide-react";
 
 export function BloodBanks({ banks = [], bookings = [] }) {
@@ -61,7 +67,17 @@ export function BloodBanks({ banks = [], bookings = [] }) {
 
   return (
     <div>
-      <Card>
+      <Card className="bg-muted/20 border-blue-900/20">
+        <CardHeader>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <CardTitle className="text-xl font-bold text-white">
+              Manage Blood Bank
+            </CardTitle>
+            <CardDescription>
+              View and manage all Blood Bank queries and problems
+            </CardDescription>
+          </div>
+        </CardHeader>
         <CardContent>
           {!bookings || bookings.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
