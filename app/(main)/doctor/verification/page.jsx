@@ -56,8 +56,8 @@ export default async function VerificationPage() {
                 <div className="text-muted-foreground text-left">
                   <p className="mb-2">
                     Our administrative team has reviewed your application and
-                    found that it doesn&apos;t meet our current requirements.
-                    Common reasons for rejection include:
+                    found that it doesn't meet our current requirements. Common
+                    reasons for rejection include:
                   </p>
                   <ul className="list-disc pl-5 space-y-1 mb-3">
                     <li>Insufficient or unclear credential documentation</li>

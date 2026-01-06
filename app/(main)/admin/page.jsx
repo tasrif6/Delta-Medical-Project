@@ -5,6 +5,8 @@ import {
   getPendingPayouts,
   getVerifiedDoctors,
 } from "@/actions/admin";
+import { getBloodBookings } from "@/actions/blood-bank";
+import { db } from "@/lib/prisma";
 import React from "react";
 import { TabsContent } from "@/components/ui/tabs";
 import { VerifiedDoctors } from "./_components/verified-doctors";
@@ -20,13 +22,38 @@ export default async function AdminPage() {
     appointmentsData,
     bloodBankData,
     pendingPayoutsData,
+    bookingsData,
   ] = await Promise.all([
     getPendingDoctors(),
     getVerifiedDoctors(),
     getAppointments(),
     getBloodBanks(),
     getPendingPayouts(),
+    getBloodBookings({ user: { role: "ADMIN" } }),
   ]);
+
+  // Enrich bookings with user info for display
+  let enrichedBookings = [];
+  try {
+    const userIds = Array.from(new Set(bookingsData.map((b) => b.userId)));
+    const users = userIds.length
+      ? await db.user.findMany({
+          where: { id: { in: userIds } },
+          select: { id: true, name: true, email: true },
+        })
+      : [];
+
+    enrichedBookings = bookingsData.map((b) => ({
+      ...b,
+      user: users.find((u) => u.id === b.userId) || { id: b.userId },
+    }));
+  } catch (e) {
+    enrichedBookings = bookingsData.map((b) => ({
+      ...b,
+      user: { id: b.userId },
+    }));
+  }
+
   return (
     <div>
       <>
@@ -41,7 +68,10 @@ export default async function AdminPage() {
           <Patients appointments={appointmentsData.appointments || []} />
         </TabsContent>
         <TabsContent value="blood-bank" className="border-none p-0">
-          <BloodBanks banks={bloodBankData.banks || []} />
+          <BloodBanks
+            banks={bloodBankData.banks || []}
+            bookings={enrichedBookings}
+          />
         </TabsContent>
         <TabsContent value="payouts" className="border-none p-0">
           <PendingPayouts payouts={pendingPayoutsData.payouts || []} />

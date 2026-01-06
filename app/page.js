@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card"
 import { creditBenefits, features, testimonials } from "@/lib/data";
 import Pricing from "@/components/Pricing";
+import FeatureCard from "@/components/feature-card";
 
 export default function Home() {
   return (
@@ -37,7 +38,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-xl">
+            <div className="relative w-full h-[420px] md:h-[520px] overflow-hidden rounded-xl">
               <Image src="/banner.jpg" alt="HomePage-image" fill priority className="object-cover w-full h-full"/>
             </div>
           </div>
@@ -56,20 +57,9 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {features.map((feature, index) => {
-              return (
-                <Card key={index} className="border hover:border-blue-600 transition-all duration-400 cursor-pointer">
-                  <CardHeader className="pb-2">
-                    <div className="p-3 rounded-lg w-fit mb-2">{feature.icon}</div>
-                    <CardTitle className="text-xl font-bold text-white">{feature.title}</CardTitle>
-                    <CardDescription>{feature.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Card Content</p>
-                  </CardContent>
-                </Card>
-              )
-            })}
+            {features.map((feature, index) => (
+              <FeatureCard key={index} feature={feature} />
+            ))}
           </div>
         </div>
       </section>

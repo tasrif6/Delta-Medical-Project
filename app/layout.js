@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs"
 import { dark } from "@clerk/themes"
 import { Toaster } from "@/components/ui/sonner";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Delta Medical",
+  title: "Delta Medical College Hospital",
   description: "Connect with Authorized and Specilized Doctors Anytime, Anywhere",
 };
 
@@ -39,16 +40,17 @@ export default function RootLayout({ children }) {
           
           {/* header */}
               <Header />
-              <main className="min-h-screen pt-20 mt-20">{children}</main>
+              <main className="min-h-screen">{children}</main>
               <Toaster />
           {/* footer */}
-              <footer>
+              {/* <footer>
                 <div className=" justify-center items-center flex border bg-white text-black mx-auto px-4 ">
                   <p>
                     Made by Md Tasrif Khan
                   </p>
                 </div>
-              </footer>
+              </footer> */}
+              <Footer />
           </ThemeProvider>
         </body>
       </html>

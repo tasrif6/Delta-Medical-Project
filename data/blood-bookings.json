@@ -1,0 +1,19 @@
+[
+  {
+    "id": "0bb0b87e-d95b-4219-be9a-94623ccc3ea9",
+    "userId": "a5328d9e-c27e-41e1-ab3f-676d8e424f97",
+    "bloodGroup": "B_POS",
+    "quantity": 2,
+    "priority": "EMERGENCY",
+    "status": "ACTIVE",
+    "deductions": [
+      {
+        "bloodBankId": "f8b59fb6-f19e-4c76-8f0e-4c68d6dba651",
+        "inventoryId": "8c07ac6b-6e8d-4a3b-be90-16d2551d76ac",
+        "units": 2
+      }
+    ],
+    "createdAt": "2026-01-06T05:37:28.928Z",
+    "updatedAt": "2026-01-06T05:37:28.928Z"
+  }
+]

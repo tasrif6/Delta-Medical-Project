@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Check, CheckCircle, Clock, X } from "lucide-react";
 import React from "react";
 
 export function Patients({ appointments = [] }) {
@@ -34,9 +36,18 @@ export function Patients({ appointments = [] }) {
 
           <div className="mt-4 md:mt-0 flex gap-2">
             {/* TODO: wire these to server actions (updateAppointmentStatus/rescheduleAppointment) */}
-            <button className="btn btn-sm">Mark Completed</button>
-            <button className="btn btn-sm">Cancel</button>
-            <button className="btn btn-sm">Reschedule</button>
+            <Button className="bg-blue-600 hover:bg-blue-800 text-white cursor-pointer">
+              <CheckCircle />
+              Mark Completed
+            </Button>
+            <Button className="bg-red-600 text-white cursor-pointer">
+              <X />
+              Cancel
+            </Button>
+            <Button className="bg-blue-600 hover:bg-blue-800 text-white cursor-pointer">
+              <Clock />
+              Reschedule
+            </Button>
           </div>
         </div>
       ))}

@@ -28,7 +28,7 @@ export default async function AdminLayout({ children }) {
         defaultValue="pending"
         className="grid grid-cols-1 md:grid-cols-4 gap-6"
       >
-        <TabsList className="md:col-span-1 bg-muted/30 border h-40 md:h-70 flex sm:flex-row md:flex-col w-full p-2 md:p-1 rounded-md md:space-y-2 sm:space-x-2 md:space-x-0">
+        <TabsList className="md:col-span-1 bg-muted/30 border h-auto flex sm:flex-row md:flex-col w-full p-2 md:p-1 rounded-md md:space-y-2 sm:space-x-2 md:space-x-0">
           <TabsTrigger
             value="pending"
             className="flex-1 md:flex md:items-center md:justify-center md:px-4 md:py-3 w-full hover:bg-blue-800 cursor-pointer"
@@ -52,7 +52,7 @@ export default async function AdminLayout({ children }) {
             <span>Patients</span>
           </TabsTrigger>
           <TabsTrigger
-            value="bloodbank"
+            value="blood-bank"
             className="flex-1 md:flex md:items-center md:justify-center md:px-4 md:py-3 w-full hover:bg-blue-800 cursor-pointer"
           >
             <HeartPlus className="h-4 w-4 mr-2 hidden md:inline text-red-600" />

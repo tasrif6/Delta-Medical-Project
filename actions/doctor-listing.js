@@ -20,3 +20,19 @@ export async function getDoctorsBySpeciality(specialty) {
     return { error: "Failed to fetch doctors" };
   }
 }
+
+export async function getAllVerifiedDoctors() {
+  try {
+    const doctors = await db.user.findMany({
+      where: {
+        role: "DOCTOR",
+        verificationStatus: "VERIFIED",
+      },
+      orderBy: { name: "asc" },
+    });
+    return { doctors };
+  } catch (error) {
+    console.error("Failed to fetch verified doctors:", error);
+    return { error: "Failed to fetch doctors" };
+  }
+}
